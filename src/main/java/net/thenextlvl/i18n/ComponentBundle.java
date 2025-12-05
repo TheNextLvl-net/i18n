@@ -24,7 +24,7 @@ import java.util.Locale;
  * This class manages internationalization using a {@link MiniMessageTranslationStore},
  * providing a fluent {@link Builder} for resource configuration.
  */
-public interface ComponentBundle {
+public sealed interface ComponentBundle permits ComponentBundleImpl {
     /**
      * Retrieves the {@link MiniMessageTranslationStore} associated with this {@link ComponentBundle}.
      *

@@ -35,7 +35,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
-class ComponentBundleImpl implements ComponentBundle {
+final class ComponentBundleImpl implements ComponentBundle {
     private static final Logger LOGGER = LoggerFactory.getLogger("i18n");
     private final Locale fallback;
     private final Map<String, String> placeholders;
