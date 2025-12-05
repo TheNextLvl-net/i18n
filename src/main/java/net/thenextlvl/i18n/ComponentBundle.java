@@ -289,7 +289,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
     /**
      * A builder interface for constructing a {@link ComponentBundle}.
      */
-    interface Builder {
+    sealed interface Builder permits ComponentBundleImpl.Builder {
         /**
          * Specifies the charset used for reading and writing resource bundles.
          * <p>
