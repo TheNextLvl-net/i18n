@@ -12,6 +12,8 @@ import net.kyori.adventure.text.minimessage.translation.Argument;
 import net.kyori.adventure.text.minimessage.translation.MiniMessageTranslationStore;
 import net.kyori.adventure.title.Title;
 import net.kyori.adventure.translation.GlobalTranslator;
+import org.jetbrains.annotations.CheckReturnValue;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NonNls;
 import org.jspecify.annotations.Nullable;
 
@@ -30,6 +32,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
      *
      * @return the {@link MiniMessageTranslationStore} instance used for managing translations
      */
+    @Contract(pure = true)
     MiniMessageTranslationStore translator();
 
     /**
@@ -38,6 +41,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
      * @return the current {@link ComponentBundle} instance
      * @throws IllegalStateException if the translation store is already registered
      */
+    @Contract(mutates = "this")
     ComponentBundle registerTranslations() throws IllegalStateException;
 
     /**
@@ -45,6 +49,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
      *
      * @throws IllegalStateException if the translation store is not registered in the global translator
      */
+    @Contract(mutates = "this")
     void unregisterTranslations() throws IllegalStateException;
 
     /**
@@ -58,6 +63,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
      * @see Argument
      */
     @Nullable
+    @CheckReturnValue
     Component translate(@NonNls String translationKey, Audience audience, ComponentLike... arguments);
 
     /**
@@ -69,6 +75,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
      * @see Argument
      */
     @Nullable
+    @CheckReturnValue
     Component translate(@NonNls String translationKey, Audience audience);
 
     /**
@@ -82,6 +89,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
      * @see Argument
      */
     @Nullable
+    @CheckReturnValue
     Component translate(@NonNls String translationKey, Locale locale, ComponentLike... arguments);
 
     /**
@@ -94,6 +102,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
      * @see Argument
      */
     @Nullable
+    @CheckReturnValue
     Component translate(@NonNls String translationKey, Locale locale);
 
     /**
@@ -106,6 +115,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
      * @see Argument
      */
     @Nullable
+    @CheckReturnValue
     Component translate(TranslatableComponent component, Audience audience);
 
     /**
@@ -118,6 +128,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
      * @see Argument
      */
     @Nullable
+    @CheckReturnValue
     Component translate(TranslatableComponent component, Locale locale);
 
     /**
@@ -210,6 +221,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
      * @return a {@link Component} containing the localized translation
      * @see #translate(String, Audience)
      */
+    @Contract(value = "_, _ -> new", pure = true)
     Component component(@NonNls String translationKey, Audience audience);
 
     /**
@@ -226,6 +238,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
      * @return the translated {@link Component}
      * @see #translate(String, Audience, ComponentLike...)
      */
+    @Contract(value = "_, _, _ -> new", pure = true)
     Component component(@NonNls String translationKey, Audience audience, ComponentLike... arguments);
 
     /**
@@ -240,6 +253,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
      * @param resolvers      optional {@link TagResolver} arguments used for resolving tags within the translation
      * @return the translated {@link Component}
      */
+    @Contract(value = "_, _, _ -> new", pure = true)
     Component component(@NonNls String translationKey, Audience audience, TagResolver... resolvers);
 
     /**
@@ -254,6 +268,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
      * @return a {@link Component} containing the localized translation
      * @see #translate(String, Locale)
      */
+    @Contract(value = "_, _ -> new", pure = true)
     Component component(@NonNls String translationKey, Locale locale);
 
     /**
@@ -270,6 +285,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
      * @return the translated {@link Component}
      * @see #translate(String, Audience, ComponentLike...)
      */
+    @Contract(value = "_, _, _ -> new", pure = true)
     Component component(@NonNls String translationKey, Locale locale, ComponentLike... arguments);
 
     /**
@@ -284,6 +300,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
      * @param resolvers      optional {@link TagResolver} arguments used for resolving tags within the translation
      * @return the translated {@link Component}
      */
+    @Contract(value = "_, _, _ -> new", pure = true)
     Component component(@NonNls String translationKey, Locale locale, TagResolver... resolvers);
 
     /**
@@ -298,6 +315,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
          * @param charset the character set to use
          * @return the builder instance for method chaining
          */
+        @Contract(value = "_ -> this", mutates = "this")
         Builder charset(Charset charset);
 
         /**
@@ -308,6 +326,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
          * @param fallback the fallback locale to use
          * @return the builder instance for method chaining
          */
+        @Contract(value = "_ -> this", mutates = "this")
         Builder fallback(Locale fallback);
 
         /**
@@ -320,6 +339,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
          * @param migrator the {@link ResourceMigrator} to apply during resource processing
          * @return the builder instance for method chaining
          */
+        @Contract(value = "_ -> this", mutates = "this")
         Builder migrator(@Nullable ResourceMigrator migrator);
 
         /**
@@ -330,6 +350,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
          * @param miniMessage the {@link MiniMessage} instance to use
          * @return the builder instance for method chaining
          */
+        @Contract(value = "_ -> this", mutates = "this")
         Builder miniMessage(MiniMessage miniMessage);
 
         /**
@@ -338,6 +359,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
          * @param name the name of the component bundle
          * @return the builder instance for method chaining
          */
+        @Contract(value = "_ -> this", mutates = "this")
         Builder name(Key name);
 
         /**
@@ -346,6 +368,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
          * @param path the path to be used for saving and reading resources
          * @return the builder instance for method chaining
          */
+        @Contract(value = "_ -> this", mutates = "this")
         Builder path(Path path);
 
         /**
@@ -359,6 +382,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
          * @return the builder instance for method chaining
          * @throws IllegalStateException thrown if the resource was already registered
          */
+        @Contract(value = "_, _ -> this", mutates = "this")
         Builder resource(String name, Locale locale) throws IllegalStateException;
 
         /**
@@ -369,6 +393,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
          * @param scope the validation scope to be used
          * @return the builder instance for method chaining
          */
+        @Contract(value = "_ -> this", mutates = "this")
         Builder scope(Scope scope);
 
         /**
@@ -383,6 +408,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
          * @see #miniMessage(MiniMessage)
          * @see MiniMessage.Builder#tags(TagResolver)
          */
+        @Contract(value = "_, _ -> this", mutates = "this")
         Builder placeholder(@TagPattern String name, @NonNls String translationKey);
 
         /**
@@ -399,6 +425,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
          * @throws ResourceMigrationException thrown if something went wrong during migration
          * @see #migrator(ResourceMigrator)
          */
+        @Contract(value = "-> new", pure = true)
         ComponentBundle build() throws ResourceMigrationException;
     }
 
@@ -424,6 +451,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
          *
          * @return whether this scope is filtering unused data
          */
+        @Contract(pure = true)
         public boolean isFiltering() {
             return equals(FILTER) || equals(FILTER_AND_FILL);
         }
@@ -433,6 +461,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
          *
          * @return whether this scope is filling in missing data
          */
+        @Contract(pure = true)
         public boolean isFilling() {
             return equals(FILL) || equals(FILTER_AND_FILL);
         }
@@ -445,6 +474,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
      * @param path the base path where resource bundles are saved to and read from
      * @return a new {@link ComponentBundle.Builder} instance
      */
+    @Contract(value = "_, _ -> new", pure = true)
     static ComponentBundle.Builder builder(Key name, Path path) {
         return new ComponentBundleImpl.Builder(name, path);
     }

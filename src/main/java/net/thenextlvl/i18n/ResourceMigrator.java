@@ -1,5 +1,7 @@
 package net.thenextlvl.i18n;
 
+import org.jetbrains.annotations.CheckReturnValue;
+import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.Nullable;
 
 import java.nio.file.Path;
@@ -26,6 +28,7 @@ public interface ResourceMigrator {
      * @see Migration#DROP
      */
     @Nullable
+    @CheckReturnValue
     default Migration migrate(Locale locale, String key, String message) {
         return null;
     }
@@ -39,6 +42,7 @@ public interface ResourceMigrator {
      * @param properties the {@code Properties} file
      * @return {@code true} if the migration should be performed, {@code false} otherwise
      */
+    @CheckReturnValue
     default boolean shouldMigrate(String resource, Properties properties) {
         return true;
     }
@@ -55,6 +59,7 @@ public interface ResourceMigrator {
      * @throws ResourceMigrationException thrown if both old and new path are the same
      * @see #getOldResourceName(Locale)
      */
+    @CheckReturnValue
     default @Nullable Path getOldPath() throws ResourceMigrationException {
         return null;
     }
@@ -73,6 +78,7 @@ public interface ResourceMigrator {
      * @see #getOldPath()
      */
     @Nullable
+    @CheckReturnValue
     default String getOldResourceName(Locale locale) {
         return null;
     }
@@ -103,6 +109,7 @@ public interface ResourceMigrator {
          * @return {@code true} if the key and message are both {@code null}
          * @see #DROP
          */
+        @Contract(pure = true)
         public boolean drop() {
             return key == null && message == null;
         }
