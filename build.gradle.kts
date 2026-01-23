@@ -15,7 +15,6 @@ tasks.compileJava {
 }
 
 group = "net.thenextlvl"
-version = "1.1.0"
 
 repositories {
     mavenCentral()

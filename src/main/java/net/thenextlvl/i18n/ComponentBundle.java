@@ -444,7 +444,13 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
         /**
          * This scope will only fill in missing data
          */
-        FILL;
+        FILL,
+        /**
+         * This scope will not perform any validation
+         *
+         * @since 1.2.0
+         */
+        NONE;
 
         /**
          * Determines whether the current scope involves filtering unused data.
