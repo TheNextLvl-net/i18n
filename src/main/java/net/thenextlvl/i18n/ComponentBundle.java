@@ -447,6 +447,8 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
         FILL,
         /**
          * This scope will not perform any validation
+         *
+         * @since 1.2.0
          */
         NONE;
 
