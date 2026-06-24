@@ -1,10 +1,10 @@
 package net.thenextlvl.i18n.test;
 
-import net.thenextlvl.i18n.ComponentBundle;
 import net.kyori.adventure.key.Keyed;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import net.kyori.adventure.translation.GlobalTranslator;
 import net.kyori.adventure.translation.Translator;
+import net.thenextlvl.i18n.ComponentBundle;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,11 +30,11 @@ public abstract class BaseTest implements Keyed {
             .placeholder("prefix", "prefix")
             .build();
 
-    protected static void cleanup(String... files) {
+    protected static void cleanup(final String... files) {
         Arrays.stream(files).map(OUTPUT::resolve).forEach(path -> {
             try {
                 Files.deleteIfExists(path);
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 LOGGER.error("Failed to delete file {}", path, e);
             }
         });
@@ -45,8 +45,8 @@ public abstract class BaseTest implements Keyed {
     public void testSources() {
         bundle.registerTranslations();
 
-        var translator = GlobalTranslator.translator();
-        var translators = new HashSet<Translator>();
+        final var translator = GlobalTranslator.translator();
+        final var translators = new HashSet<Translator>();
         translator.sources().iterator().forEachRemaining(translators::add);
         Assertions.assertTrue(translators.contains(bundle.translator()), "Translation store not registered");
 

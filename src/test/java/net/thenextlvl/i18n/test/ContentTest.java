@@ -26,24 +26,24 @@ public class ContentTest extends BaseTest {
     @ParameterizedTest
     @MethodSource("prefixedContent")
     @DisplayName("Placeholders as expected")
-    public void testPlaceholders(String expected, Locale locale) {
-        var translation = bundle.translate("prefix_test", locale);
+    public void testPlaceholders(final String expected, final Locale locale) {
+        final var translation = bundle.translate("prefix_test", locale);
         Assertions.assertEquals(Component.text(expected), translation);
     }
 
     @ParameterizedTest
     @MethodSource("content")
     @DisplayName("Content as expected")
-    public void testContent(String expected, Locale locale) {
-        var translation = bundle.translate("greetings", locale);
+    public void testContent(final String expected, final Locale locale) {
+        final var translation = bundle.translate("greetings", locale);
         Assertions.assertEquals(Component.text(expected), translation);
     }
 
     @ParameterizedTest
     @MethodSource("resolvedContent")
     @DisplayName("Resolved content as expected")
-    public void testResolvedContent(String expected, ComponentLike argument, Locale locale) {
-        var translation = bundle.translate("resolved", locale, argument);
+    public void testResolvedContent(final String expected, final ComponentLike argument, final Locale locale) {
+        final var translation = bundle.translate("resolved", locale, argument);
         Assertions.assertEquals(Component.text(expected), translation);
     }
 

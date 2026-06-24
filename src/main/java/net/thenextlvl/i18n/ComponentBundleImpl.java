@@ -65,41 +65,41 @@ final class ComponentBundleImpl implements ComponentBundle {
     }
 
     @Override
-    public @Nullable Component translate(String translationKey, Audience audience, ComponentLike... arguments) {
+    public @Nullable Component translate(final String translationKey, final Audience audience, final ComponentLike... arguments) {
         return translate(Component.translatable(translationKey, arguments), audience);
     }
 
     @Override
-    public @Nullable Component translate(String translationKey, Audience audience) {
+    public @Nullable Component translate(final String translationKey, final Audience audience) {
         return translate(translationKey, audience, new Component[0]);
     }
 
     @Override
-    public @Nullable Component translate(String translationKey, Locale locale, ComponentLike... arguments) {
+    public @Nullable Component translate(final String translationKey, final Locale locale, final ComponentLike... arguments) {
         return translate(Component.translatable(translationKey, arguments), locale);
     }
 
     @Override
-    public @Nullable Component translate(String translationKey, Locale locale) {
+    public @Nullable Component translate(final String translationKey, final Locale locale) {
         return translate(translationKey, locale, new Component[0]);
     }
 
     @Override
-    public @Nullable Component translate(TranslatableComponent component, Audience audience) {
+    public @Nullable Component translate(final TranslatableComponent component, final Audience audience) {
         return translate(component, audience.get(Identity.LOCALE).orElse(fallback));
     }
 
     @Override
-    public @Nullable Component translate(TranslatableComponent component, Locale locale) {
+    public @Nullable Component translate(TranslatableComponent component, final Locale locale) {
         if (!placeholders.isEmpty()) component = component.arguments(placeholders(locale, component.arguments()));
         return translator.translate(component, locale);
     }
 
     @SuppressWarnings("PatternValidation")
-    private List<ComponentLike> placeholders(Locale locale, List<TranslationArgument> arguments) {
-        var result = new ArrayList<ComponentLike>(arguments.size() + placeholders.size());
-        for (var entry : placeholders.entrySet()) {
-            var translated = translator.translate(Component.translatable(entry.getValue()), locale);
+    private List<ComponentLike> placeholders(final Locale locale, final List<TranslationArgument> arguments) {
+        final var result = new ArrayList<ComponentLike>(arguments.size() + placeholders.size());
+        for (final var entry : placeholders.entrySet()) {
+            final var translated = translator.translate(Component.translatable(entry.getValue()), locale);
             if (translated != null) result.add(Argument.component(entry.getKey(), translated));
             else result.add(Component.text(entry.getValue(), NamedTextColor.RED));
         }
@@ -108,31 +108,31 @@ final class ComponentBundleImpl implements ComponentBundle {
     }
 
     @Override
-    public void sendMessage(Audience audience, String translationKey) {
+    public void sendMessage(final Audience audience, final String translationKey) {
         sendMessage(audience, translationKey, new Component[0]);
     }
 
     @Override
-    public void sendMessage(Audience audience, String translationKey, ComponentLike... arguments) {
-        var translated = translate(translationKey, audience, arguments);
+    public void sendMessage(final Audience audience, final String translationKey, final ComponentLike... arguments) {
+        final var translated = translate(translationKey, audience, arguments);
         if (translated != null && !Component.empty().equals(translated)) audience.sendMessage(translated);
     }
 
     @Override
-    public void sendMessage(Audience audience, String translationKey, TagResolver... resolver) {
+    public void sendMessage(final Audience audience, final String translationKey, final TagResolver... resolver) {
         sendMessage(audience, translationKey, Argument.tagResolver(resolver));
     }
 
     @Override
-    public void sendActionBar(Audience audience, String translationKey, ComponentLike... arguments) {
-        var translated = translate(translationKey, audience, arguments);
+    public void sendActionBar(final Audience audience, final String translationKey, final ComponentLike... arguments) {
+        final var translated = translate(translationKey, audience, arguments);
         if (translated != null && !Component.empty().equals(translated)) audience.sendActionBar(translated);
     }
 
     @Override
-    public void showTitle(Audience audience, @Nullable String title, @Nullable String subtitle, Title.@Nullable Times times, ComponentLike... arguments) {
-        var titleComponent = title != null ? translate(title, audience, arguments) : null;
-        var subtitleComponent = subtitle != null ? translate(subtitle, audience, arguments) : null;
+    public void showTitle(final Audience audience, @Nullable final String title, @Nullable final String subtitle, final Title.@Nullable Times times, final ComponentLike... arguments) {
+        final var titleComponent = title != null ? translate(title, audience, arguments) : null;
+        final var subtitleComponent = subtitle != null ? translate(subtitle, audience, arguments) : null;
         if (subtitleComponent != null || titleComponent != null) audience.showTitle(Title.title(
                 titleComponent != null ? titleComponent : Component.empty(),
                 subtitleComponent != null ? subtitleComponent : Component.empty(),
@@ -141,39 +141,39 @@ final class ComponentBundleImpl implements ComponentBundle {
     }
 
     @Override
-    public void showTitle(Audience audience, @Nullable String title, @Nullable String subtitle, ComponentLike... arguments) {
+    public void showTitle(final Audience audience, @Nullable final String title, @Nullable final String subtitle, final ComponentLike... arguments) {
         showTitle(audience, title, subtitle, Title.DEFAULT_TIMES, arguments);
     }
 
     @Override
-    public Component component(String translationKey, Audience audience) {
+    public Component component(final String translationKey, final Audience audience) {
         return component(translationKey, audience, new Component[0]);
     }
 
     @Override
-    public Component component(String translationKey, Audience audience, ComponentLike... arguments) {
-        var locale = audience.get(Identity.LOCALE).orElse(fallback);
+    public Component component(final String translationKey, final Audience audience, final ComponentLike... arguments) {
+        final var locale = audience.get(Identity.LOCALE).orElse(fallback);
         return component(translationKey, locale, arguments);
     }
 
     @Override
-    public Component component(String translationKey, Audience audience, TagResolver... resolvers) {
+    public Component component(final String translationKey, final Audience audience, final TagResolver... resolvers) {
         return component(translationKey, audience, Argument.tagResolver(resolvers));
     }
 
     @Override
-    public Component component(String translationKey, Locale locale) {
+    public Component component(final String translationKey, final Locale locale) {
         return component(translationKey, locale, new Component[0]);
     }
 
     @Override
-    public Component component(String translationKey, Locale locale, ComponentLike... arguments) {
-        var translated = translate(translationKey, locale, arguments);
+    public Component component(final String translationKey, final Locale locale, final ComponentLike... arguments) {
+        final var translated = translate(translationKey, locale, arguments);
         return translated != null ? translated : Component.text(translationKey, NamedTextColor.RED);
     }
 
     @Override
-    public Component component(String translationKey, Locale locale, TagResolver... resolvers) {
+    public Component component(final String translationKey, final Locale locale, final TagResolver... resolvers) {
         return component(translationKey, locale, Argument.tagResolver(resolvers));
     }
 
@@ -190,87 +190,87 @@ final class ComponentBundleImpl implements ComponentBundle {
         private Key name;
         private Path path;
 
-        Builder(Key name, Path path) {
+        Builder(final Key name, final Path path) {
             this.name = name;
             this.path = path;
         }
 
         @Override
-        public ComponentBundle.Builder charset(Charset charset) {
+        public ComponentBundle.Builder charset(final Charset charset) {
             this.charset = charset;
             return this;
         }
 
         @Override
-        public ComponentBundle.Builder fallback(Locale fallback) {
+        public ComponentBundle.Builder fallback(final Locale fallback) {
             this.fallback = fallback;
             return this;
         }
 
         @Override
-        public ComponentBundle.Builder migrator(@Nullable ResourceMigrator migrator) {
+        public ComponentBundle.Builder migrator(@Nullable final ResourceMigrator migrator) {
             this.migrator = migrator;
             return this;
         }
 
         @Override
-        public ComponentBundle.Builder miniMessage(MiniMessage miniMessage) {
+        public ComponentBundle.Builder miniMessage(final MiniMessage miniMessage) {
             this.miniMessage = miniMessage;
             return this;
         }
 
         @Override
-        public ComponentBundle.Builder name(Key name) {
+        public ComponentBundle.Builder name(final Key name) {
             this.name = name;
             return this;
         }
 
         @Override
-        public ComponentBundle.Builder path(Path path) {
+        public ComponentBundle.Builder path(final Path path) {
             this.path = path;
             return this;
         }
 
         @Override
-        public Builder resource(String name, Locale locale) throws IllegalStateException {
-            var suffix = ".properties";
-            var key = name.endsWith(suffix) ? name : name + suffix;
+        public Builder resource(final String name, final Locale locale) throws IllegalStateException {
+            final var suffix = ".properties";
+            final var key = name.endsWith(suffix) ? name : name + suffix;
             if (files.put(key, locale) == null) return this;
             throw new IllegalStateException("Resource '" + key + "' already registered for locale " + locale);
         }
 
         @Override
-        public ComponentBundle.Builder scope(Scope scope) {
+        public ComponentBundle.Builder scope(final Scope scope) {
             this.scope = scope;
             return this;
         }
 
         @Override
-        public ComponentBundle.Builder placeholder(@TagPattern String name, String translationKey) {
+        public ComponentBundle.Builder placeholder(@TagPattern final String name, final String translationKey) {
             placeholders.put(name, translationKey);
             return this;
         }
 
         @Override
         public ComponentBundle build() throws ResourceMigrationException {
-            var registry = MiniMessageTranslationStore.create(name, miniMessage);
+            final var registry = MiniMessageTranslationStore.create(name, miniMessage);
             registry.defaultLocale(fallback);
             registerResources(registry);
-            return new ComponentBundleImpl(fallback, placeholders, registry);
+            return new ComponentBundleImpl(fallback, placeholders, registry, miniMessage);
         }
 
-        private void registerResources(MiniMessageTranslationStore registry) {
+        private void registerResources(final MiniMessageTranslationStore registry) {
             files.forEach((name, locale) -> {
                 try {
                     registry.registerAll(locale, extractResource(name, locale));
-                } catch (IOException e) {
+                } catch (final IOException e) {
                     LOGGER.error("Failed to register resource '{}' ({})", name, locale, e);
                 }
             });
         }
 
-        private @Unmodifiable Map<String, String> extractResource(String baseName, Locale locale) throws IOException {
-            var file = new PropertiesFile(path.resolve(baseName), charset, readResource(baseName));
+        private @Unmodifiable Map<String, String> extractResource(final String baseName, final Locale locale) throws IOException {
+            final var file = new PropertiesFile(path.resolve(baseName), charset, readResource(baseName));
 
             migrate(baseName, locale, file);
 
@@ -279,62 +279,62 @@ final class ComponentBundleImpl implements ComponentBundle {
             if (file.getRoot().isEmpty()) Files.deleteIfExists(file.getFile());
             else file.save();
 
-            var properties = new HashMap<String, String>(file.getRoot().size());
+            final var properties = new HashMap<String, String>(file.getRoot().size());
             file.getRoot().forEach((key, value) -> properties.put(key.toString(), value.toString()));
             return properties;
         }
 
-        private Properties readResource(String name) throws IOException {
-            try (var resource = getClass().getClassLoader().getResourceAsStream(name)) {
+        private Properties readResource(final String name) throws IOException {
+            try (final var resource = getClass().getClassLoader().getResourceAsStream(name)) {
                 if (resource != null) return readResource(resource);
                 throw new IOException("Resource '" + name + "' not found in classpath");
             }
         }
 
-        private Properties readResource(InputStream resource) throws IOException {
-            try (var reader = new InputStreamReader(resource, charset);
-                 var buffer = new BufferedReader(reader)) {
-                var properties = new Properties();
+        private Properties readResource(final InputStream resource) throws IOException {
+            try (final var reader = new InputStreamReader(resource, charset);
+                 final var buffer = new BufferedReader(reader)) {
+                final var properties = new Properties();
                 properties.load(buffer);
                 return properties;
             }
         }
 
-        private void migrate(String baseName, Locale locale, PropertiesFile file) throws IOException {
-            var oldResource = migrator != null ? migrator.getOldResourceName(locale) : null;
+        private void migrate(final String baseName, final Locale locale, final PropertiesFile file) throws IOException {
+            final var oldResource = migrator != null ? migrator.getOldResourceName(locale) : null;
 
-            var oldPath = migrator != null ? migrator.getOldPath() : null;
+            final var oldPath = migrator != null ? migrator.getOldPath() : null;
             if (path.equals(oldPath)) throw new ResourceMigrationException("New and old path cannot match");
 
-            var migrate = (oldPath != null || !baseName.equals(oldResource))
+            final var migrate = (oldPath != null || !baseName.equals(oldResource))
                     && (oldResource != null || oldPath != null);
 
             if (migrate) migrate(baseName, file, oldPath, oldResource);
 
             if (migrate || Files.isRegularFile(file.getFile())) try {
                 migrateResource(baseName, locale, file);
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 throw new ResourceMigrationException("An error occurred while migrating resource '" + file.getFile() + "'", e);
             }
         }
 
-        private void migrate(String baseName, PropertiesFile file, @Nullable Path oldPath, @Nullable String oldResource) throws IOException {
-            var actualPath = oldPath != null ? oldPath : path;
-            var actualResource = oldResource != null ? oldResource : baseName;
-            var oldFile = new PropertiesFile(actualPath.resolve(actualResource), charset, new Properties());
+        private void migrate(final String baseName, final PropertiesFile file, @Nullable final Path oldPath, @Nullable final String oldResource) throws IOException {
+            final var actualPath = oldPath != null ? oldPath : path;
+            final var actualResource = oldResource != null ? oldResource : baseName;
+            final var oldFile = new PropertiesFile(actualPath.resolve(actualResource), charset, new Properties());
             file.merge(oldFile.getRoot());
             if (Files.deleteIfExists(oldFile.getFile()))
                 LOGGER.debug("Migrated resource '{}' to '{}'", oldFile.getFile(), file.getFile());
             else LOGGER.warn("Failed to delete old resource '{}'", oldFile.getFile());
         }
 
-        private void migrateResource(String resource, Locale locale, PropertiesFile file) {
+        private void migrateResource(final String resource, final Locale locale, final PropertiesFile file) {
             if (migrator == null || !migrator.shouldMigrate(resource, file.getRoot())) return;
 
-            var migrated = new Properties(file.getRoot().size());
+            final var migrated = new Properties(file.getRoot().size());
 
             file.getRoot().forEach((key, message) -> {
-                var migration = migrator.migrate(locale, key.toString(), message.toString());
+                final var migration = migrator.migrate(locale, key.toString(), message.toString());
                 if (migration == null) {
                     migrated.put(key, message);
                     return;
@@ -342,8 +342,8 @@ final class ComponentBundleImpl implements ComponentBundle {
 
                 if (migration.drop()) return;
 
-                var migratedKey = migration.key() != null ? migration.key() : key;
-                var migratedMessage = migration.message() != null ? migration.message() : message;
+                final var migratedKey = migration.key() != null ? migration.key() : key;
+                final var migratedMessage = migration.message() != null ? migration.message() : message;
 
                 migrated.put(migratedKey, migratedMessage);
             });

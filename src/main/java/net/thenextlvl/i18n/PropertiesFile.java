@@ -25,7 +25,7 @@ class PropertiesFile {
 
     private boolean loaded;
 
-    public PropertiesFile(Path path, Charset charset, Properties root) {
+    public PropertiesFile(final Path path, final Charset charset, final Properties root) {
         this.charset = charset;
         this.defaultRoot = root;
         this.path = path;
@@ -34,34 +34,34 @@ class PropertiesFile {
 
     protected Properties load() {
         if (!Files.isRegularFile(getFile())) return (Properties) getRoot().clone();
-        try (var reader = new InputStreamReader(Files.newInputStream(getFile(), READ), charset);
-             var buffer = new BufferedReader(reader)) {
-            var properties = new Properties();
+        try (final var reader = new InputStreamReader(Files.newInputStream(getFile(), READ), charset);
+             final var buffer = new BufferedReader(reader)) {
+            final var properties = new Properties();
             properties.load(buffer);
             return properties;
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public PropertiesFile save(FileAttribute<?>... attributes) {
+    public PropertiesFile save(final FileAttribute<?>... attributes) {
         try {
-            var root = getRoot();
+            final var root = getRoot();
             Files.createDirectories(getFile().toAbsolutePath().getParent(), attributes);
-            try (var writer = new BufferedWriter(new OutputStreamWriter(
+            try (final var writer = new BufferedWriter(new OutputStreamWriter(
                     Files.newOutputStream(getFile(), WRITE, CREATE, TRUNCATE_EXISTING),
                     charset
             ))) {
                 root.store(writer, null);
                 return this;
             }
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public PropertiesFile validate(ComponentBundle.Scope scope) {
-        var root = getRoot();
+    public PropertiesFile validate(final ComponentBundle.Scope scope) {
+        final var root = getRoot();
         if (root == defaultRoot) return this;
         if (scope.isFiltering()) root.entrySet().removeIf(entry ->
                 !defaultRoot.containsKey(entry.getKey()));
@@ -69,7 +69,7 @@ class PropertiesFile {
         return this;
     }
 
-    public PropertiesFile setRoot(Properties root) {
+    public PropertiesFile setRoot(final Properties root) {
         this.loaded = true;
         this.root = root;
         return this;
@@ -85,8 +85,8 @@ class PropertiesFile {
         return path;
     }
 
-    public PropertiesFile merge(Properties properties) {
-        var root = getRoot();
+    public PropertiesFile merge(final Properties properties) {
+        final var root = getRoot();
         properties.forEach((key, value) -> {
             if (root.containsKey(key)) return;
             root.put(key, value);

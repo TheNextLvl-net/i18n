@@ -29,7 +29,7 @@ public interface ResourceMigrator {
      */
     @Nullable
     @CheckReturnValue
-    default Migration migrate(Locale locale, String key, String message) {
+    default Migration migrate(final Locale locale, final String key, final String message) {
         return null;
     }
 
@@ -43,7 +43,7 @@ public interface ResourceMigrator {
      * @return {@code true} if the migration should be performed, {@code false} otherwise
      */
     @CheckReturnValue
-    default boolean shouldMigrate(String resource, Properties properties) {
+    default boolean shouldMigrate(final String resource, final Properties properties) {
         return true;
     }
 
@@ -79,7 +79,7 @@ public interface ResourceMigrator {
      */
     @Nullable
     @CheckReturnValue
-    default String getOldResourceName(Locale locale) {
+    default String getOldResourceName(final Locale locale) {
         return null;
     }
 

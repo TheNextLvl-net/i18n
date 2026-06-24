@@ -481,7 +481,7 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
      * @return a new {@link ComponentBundle.Builder} instance
      */
     @Contract(value = "_, _ -> new", pure = true)
-    static ComponentBundle.Builder builder(Key name, Path path) {
+    static ComponentBundle.Builder builder(final Key name, final Path path) {
         return new ComponentBundleImpl.Builder(name, path);
     }
 }

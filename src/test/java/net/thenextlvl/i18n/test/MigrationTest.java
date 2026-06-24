@@ -25,19 +25,19 @@ public class MigrationTest extends BaseTest implements ResourceMigrator {
     @Test
     @DisplayName("Migrate old keys and messages")
     public void testStringMigration() {
-        var oldResources = ComponentBundle.builder(key(), OUTPUT);
+        final var oldResources = ComponentBundle.builder(key(), OUTPUT);
         oldFiles.forEach((locale, file) -> oldResources.resource(file, locale));
         oldResources.build();
 
-        var bundle = ComponentBundle.builder(key(), OUTPUT)
+        final var bundle = ComponentBundle.builder(key(), OUTPUT)
                 .resource("up_to_date.properties", Locale.US)
                 .resource("up_to_date_german.properties", Locale.GERMANY)
                 .migrator(this)
                 .build();
 
-        var english = bundle.translator().translate(Component.translatable("success"), Locale.US);
+        final var english = bundle.translator().translate(Component.translatable("success"), Locale.US);
         Assertions.assertEquals(Component.text("migrated"), english);
-        var german = bundle.translator().translate(Component.translatable("success"), Locale.GERMANY);
+        final var german = bundle.translator().translate(Component.translatable("success"), Locale.GERMANY);
         Assertions.assertEquals(Component.text("Migriert"), german);
     }
 
@@ -47,12 +47,12 @@ public class MigrationTest extends BaseTest implements ResourceMigrator {
     }
 
     @Override
-    public @Nullable Migration migrate(Locale locale, String key, String message) {
+    public @Nullable Migration migrate(final Locale locale, final String key, final String message) {
         return new Migration(keys.getOrDefault(key, key), null);
     }
 
     @Override
-    public @Nullable String getOldResourceName(Locale locale) {
+    public @Nullable String getOldResourceName(final Locale locale) {
         return oldFiles.get(locale);
     }
 
