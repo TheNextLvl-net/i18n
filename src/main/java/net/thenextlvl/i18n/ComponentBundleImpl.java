@@ -29,6 +29,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -38,11 +39,13 @@ import java.util.Properties;
 final class ComponentBundleImpl implements ComponentBundle {
     private static final Logger LOGGER = LoggerFactory.getLogger("i18n");
     private final Locale fallback;
+    private final MiniMessage miniMessage;
     private final Map<String, String> placeholders;
     private final MiniMessageTranslationStore translator;
 
-    private ComponentBundleImpl(Locale fallback, Map<String, String> placeholders, MiniMessageTranslationStore translator) {
+    private ComponentBundleImpl(final Locale fallback, final Map<String, String> placeholders, final MiniMessageTranslationStore translator, final MiniMessage miniMessage) {
         this.fallback = fallback;
+        this.miniMessage = miniMessage;
         this.placeholders = Map.copyOf(placeholders);
         this.translator = translator;
     }
@@ -175,6 +178,39 @@ final class ComponentBundleImpl implements ComponentBundle {
     @Override
     public Component component(final String translationKey, final Locale locale, final TagResolver... resolvers) {
         return component(translationKey, locale, Argument.tagResolver(resolvers));
+    }
+
+    @Override
+    public Component[] components(final String translationKey, final Audience audience) {
+        return components(translationKey, audience, new Component[0]);
+    }
+
+    @Override
+    public Component[] components(final String translationKey, final Audience audience, final ComponentLike... arguments) {
+        return components(translationKey, audience.get(Identity.LOCALE).orElse(fallback), arguments);
+    }
+
+    @Override
+    public Component[] components(final String translationKey, final Audience audience, final TagResolver... resolvers) {
+        return components(translationKey, audience, Argument.tagResolver(resolvers));
+    }
+
+    @Override
+    public Component[] components(final String translationKey, final Locale locale) {
+        return components(translationKey, locale, new Component[0]);
+    }
+
+    @Override
+    public Component[] components(final String translationKey, final Locale locale, final ComponentLike... arguments) {
+        final var serialized = miniMessage.serialize(component(translationKey, locale, arguments));
+        return Arrays.stream(serialized.split("<br>|<newline>|\n", -1))
+                .map(miniMessage::deserialize)
+                .toArray(Component[]::new);
+    }
+
+    @Override
+    public Component[] components(final String translationKey, final Locale locale, final TagResolver... resolvers) {
+        return components(translationKey, locale, Argument.tagResolver(resolvers));
     }
 
     public static final class Builder implements ComponentBundle.Builder {

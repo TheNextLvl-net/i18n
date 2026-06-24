@@ -304,6 +304,112 @@ public sealed interface ComponentBundle permits ComponentBundleImpl {
     Component component(@NonNls String translationKey, Locale locale, TagResolver... resolvers);
 
     /**
+     * Creates an array of {@link Component Components} based on the provided translation key and locale.
+     * Each line separated by {@code <br>}, {@code <newline>}, or {@code \n} is returned as a separate component.
+     * <p>
+     * Opposed to {@link #translate(String, Audience)},
+     * this method does not return null if the translation could not be resolved.
+     * Instead, it returns an array containing a red text component with the translation key.
+     *
+     * @param translationKey the key used to retrieve the localized translation
+     * @param audience       the {@link Audience} to determine the locale used for the translation
+     * @return an array containing one localized {@link Component} per line
+     * @see #translate(String, Audience)
+     * @since 1.3.0
+     */
+    @Contract(value = "_, _ -> new", pure = true)
+    Component[] components(@NonNls String translationKey, Audience audience);
+
+    /**
+     * Translates a given translation key into an array of localized {@link Component Components} for the specified
+     * {@link Audience}, with optional arguments for formatting arguments within the translation.
+     * Each line separated by {@code <br>}, {@code <newline>}, or {@code \n} is returned as a separate component.
+     * <p>
+     * Opposed to {@link #translate(String, Audience, ComponentLike...)},
+     * this method does not return null if the translation could not be resolved.
+     * Instead, it returns an array containing a red text component with the translation key.
+     *
+     * @param translationKey the translation key representing the entry to be localized
+     * @param audience       the {@link Audience} to determine the locale used for the translation
+     * @param arguments      optional {@link ComponentLike} arguments used to replace arguments within the translation
+     * @return an array containing one translated {@link Component} per line
+     * @see #translate(String, Audience, ComponentLike...)
+     * @since 1.3.0
+     */
+    @Contract(value = "_, _, _ -> new", pure = true)
+    Component[] components(@NonNls String translationKey, Audience audience, ComponentLike... arguments);
+
+    /**
+     * Translates a given translation key into an array of localized {@link Component Components} for the specified
+     * {@link Audience}, with optional tag resolvers for formatting arguments within the translation.
+     * Each line separated by {@code <br>}, {@code <newline>}, or {@code \n} is returned as a separate component.
+     * <p>
+     * This method does not return null if the translation could not be resolved.
+     * Instead, it returns an array containing a red text component with the translation key.
+     *
+     * @param translationKey the translation key representing the entry to be localized
+     * @param audience       the {@link Audience} to determine the locale used for the translation
+     * @param resolvers      optional {@link TagResolver} arguments used for resolving tags within the translation
+     * @return an array containing one translated {@link Component} per line
+     * @since 1.3.0
+     */
+    @Contract(value = "_, _, _ -> new", pure = true)
+    Component[] components(@NonNls String translationKey, Audience audience, TagResolver... resolvers);
+
+    /**
+     * Creates an array of {@link Component Components} based on the provided translation key and locale.
+     * Each line separated by {@code <br>}, {@code <newline>}, or {@code \n} is returned as a separate component.
+     * <p>
+     * Opposed to {@link #translate(String, Locale)},
+     * this method does not return null if the translation could not be resolved.
+     * Instead, it returns an array containing a red text component with the translation key.
+     *
+     * @param translationKey the key used to retrieve the localized translation
+     * @param locale         the locale that determines the language and formatting of the translation
+     * @return an array containing one localized {@link Component} per line
+     * @see #translate(String, Locale)
+     * @since 1.3.0
+     */
+    @Contract(value = "_, _ -> new", pure = true)
+    Component[] components(@NonNls String translationKey, Locale locale);
+
+    /**
+     * Translates a given translation key into an array of localized {@link Component Components},
+     * with optional arguments for formatting arguments within the translation.
+     * Each line separated by {@code <br>}, {@code <newline>}, or {@code \n} is returned as a separate component.
+     * <p>
+     * Opposed to {@link #translate(String, Locale, ComponentLike...)},
+     * this method does not return null if the translation could not be resolved.
+     * Instead, it returns an array containing a red text component with the translation key.
+     *
+     * @param translationKey the translation key representing the entry to be localized
+     * @param locale         the locale that determines the language and formatting of the translation
+     * @param arguments      optional {@link ComponentLike} arguments used to replace arguments within the translation
+     * @return an array containing one translated {@link Component} per line
+     * @see #translate(String, Locale, ComponentLike...)
+     * @since 1.3.0
+     */
+    @Contract(value = "_, _, _ -> new", pure = true)
+    Component[] components(@NonNls String translationKey, Locale locale, ComponentLike... arguments);
+
+    /**
+     * Translates a given translation key into an array of localized {@link Component Components},
+     * with optional tag resolvers for formatting arguments within the translation.
+     * Each line separated by {@code <br>}, {@code <newline>}, or {@code \n} is returned as a separate component.
+     * <p>
+     * This method does not return null if the translation could not be resolved.
+     * Instead, it returns an array containing a red text component with the translation key.
+     *
+     * @param translationKey the translation key representing the entry to be localized
+     * @param locale         the locale that determines the language and formatting of the translation
+     * @param resolvers      optional {@link TagResolver} arguments used for resolving tags within the translation
+     * @return an array containing one translated {@link Component} per line
+     * @since 1.3.0
+     */
+    @Contract(value = "_, _, _ -> new", pure = true)
+    Component[] components(@NonNls String translationKey, Locale locale, TagResolver... resolvers);
+
+    /**
      * A builder interface for constructing a {@link ComponentBundle}.
      */
     sealed interface Builder permits ComponentBundleImpl.Builder {
