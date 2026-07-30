@@ -22,11 +22,11 @@ repositories {
 }
 
 dependencies {
-    compileOnly("org.jspecify:jspecify:1.0.0")
+    compileOnly("org.jspecify:jspecify:1.0.1")
     compileOnlyApi("net.kyori:adventure-text-logger-slf4j:4.27.0-SNAPSHOT")
     compileOnlyApi("net.kyori:adventure-text-minimessage:4.27.0-SNAPSHOT")
 
-    testCompileOnly("org.jspecify:jspecify:1.0.0")
+    testCompileOnly("org.jspecify:jspecify:1.0.1")
     testImplementation("net.kyori:adventure-text-logger-slf4j:4.27.0-SNAPSHOT")
     testImplementation("net.kyori:adventure-text-minimessage:4.27.0-SNAPSHOT")
     testImplementation("org.junit.jupiter:junit-jupiter")
