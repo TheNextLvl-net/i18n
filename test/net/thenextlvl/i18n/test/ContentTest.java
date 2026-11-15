@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 public class ContentTest extends BaseTest {
     @BeforeAll
     public static void setup() {
-        cleanup("test.properties", "test_german.properties", "test_italian.properties", "test_spanish.properties");
+        BaseTest.cleanup("test.properties", "test_german.properties", "test_italian.properties", "test_spanish.properties");
     }
 
     @ParameterizedTest
@@ -57,7 +57,7 @@ public class ContentTest extends BaseTest {
                 Arguments.argumentSet("english", "Hello", Locale.US),
                 Arguments.argumentSet("german", "Hallo", Locale.GERMANY),
                 Arguments.argumentSet("italian", "Ciao", Locale.ITALY),
-                Arguments.argumentSet("spanish", "", SPANISH)
+                Arguments.argumentSet("spanish", "", BaseTest.SPANISH)
         );
     }
 
@@ -73,11 +73,11 @@ public class ContentTest extends BaseTest {
                 Arguments.argumentSet("english", "Hello World!", Argument.string("world", "World"), Locale.US),
                 Arguments.argumentSet("german", "Hallo Welt!", Argument.string("world", "Welt"), Locale.GERMANY),
                 Arguments.argumentSet("italian", "Ciao Mondo!", Argument.string("world", "Mondo"), Locale.ITALY),
-                Arguments.argumentSet("spanish", "!", Argument.string("world", ""), SPANISH),
+                Arguments.argumentSet("spanish", "!", Argument.string("world", ""), BaseTest.SPANISH),
                 Arguments.argumentSet("english", "Hello World!", Argument.tagResolver(TagResolver.resolver("world", Tag.inserting(Component.text("World")))), Locale.US),
                 Arguments.argumentSet("german", "Hallo Welt!", Argument.tagResolver(TagResolver.resolver("world", Tag.inserting(Component.text("Welt")))), Locale.GERMANY),
                 Arguments.argumentSet("italian", "Ciao Mondo!", Argument.tagResolver(TagResolver.resolver("world", Tag.inserting(Component.text("Mondo")))), Locale.ITALY),
-                Arguments.argumentSet("spanish", "!", Argument.tagResolver(TagResolver.resolver("world", Tag.inserting(Component.empty()))), SPANISH)
+                Arguments.argumentSet("spanish", "!", Argument.tagResolver(TagResolver.resolver("world", Tag.inserting(Component.empty()))), BaseTest.SPANISH)
         );
     }
 }

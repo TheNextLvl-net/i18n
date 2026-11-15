@@ -13,15 +13,15 @@ public class FileCreationTest extends BaseTest {
     @Test
     @DisplayName("Non-empty file creation")
     public void nonEmptyFileCreation() {
-        Assertions.assertTrue(Files.isRegularFile(OUTPUT.resolve("test.properties")));
-        Assertions.assertTrue(Files.isRegularFile(OUTPUT.resolve("test_german.properties")));
-        Assertions.assertTrue(Files.isRegularFile(OUTPUT.resolve("test_italian.properties")));
+        Assertions.assertTrue(Files.isRegularFile(BaseTest.OUTPUT.resolve("test.properties")));
+        Assertions.assertTrue(Files.isRegularFile(BaseTest.OUTPUT.resolve("test_german.properties")));
+        Assertions.assertTrue(Files.isRegularFile(BaseTest.OUTPUT.resolve("test_italian.properties")));
     }
 
     @Test
     @DisplayName("Empty file creation")
     public void emptyFileCreation() {
-        Assertions.assertFalse(Files.isRegularFile(OUTPUT.resolve("test_spanish_empty.properties")));
+        Assertions.assertFalse(Files.isRegularFile(BaseTest.OUTPUT.resolve("test_spanish_empty.properties")));
     }
 
     @Override
