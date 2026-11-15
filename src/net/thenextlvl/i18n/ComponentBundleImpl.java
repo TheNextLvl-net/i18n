@@ -37,7 +37,7 @@ import java.util.Map;
 import java.util.Properties;
 
 final class ComponentBundleImpl implements ComponentBundle {
-    private static final Logger LOGGER = LoggerFactory.getLogger("i18n");
+    private static final Logger LOGGER = LoggerFactory.getLogger("net/thenextlvl/i18n");
     private final Locale fallback;
     private final MiniMessage miniMessage;
     private final Map<String, String> placeholders;
