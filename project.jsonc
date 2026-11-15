@@ -36,8 +36,7 @@
           "snapshots": "https://repo.thenextlvl.net/snapshots"
         }
       },
-      "javadoc": true,
-      "sign": true
+      "javadoc": true
     }
   }
 }
