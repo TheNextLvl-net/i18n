@@ -1,6 +1,4 @@
-.gradle
+.cache
 .idea
-.run
-build
-output
 dist
+output
