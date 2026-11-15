@@ -5,18 +5,17 @@ on:
 jobs:
   build:
     env:
-      REPOSITORY_USER: ${{ secrets.REPOSITORY_USER }}
-      REPOSITORY_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
+      JPM_PUBLISH_USERNAME: ${{ secrets.REPOSITORY_USER }}
+      JPM_PUBLISH_PASSWORD: ${{ secrets.REPOSITORY_TOKEN }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
         uses: actions/checkout@v7
-      - name: Setup Java
-        uses: actions/setup-java@v6
-        with:
-          distribution: 'temurin'
-          java-version: 25
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v6
-      - name: Publish with Gradle to Repository
-        run: ./gradlew publish
+      - name: Setup jpm
+        uses: java-package-manager/setup-jpm@v1
+      - name: Install jpm-publish
+        run: jpm add -g github:java-package-manager/jpm-publish
+      - name: Install dependencies
+        run: jpm install --frozen
+      - name: Publish with jpm to Repository
+        run: jpm publish
