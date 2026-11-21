@@ -25,11 +25,11 @@ public class MigrationTest extends BaseTest implements ResourceMigrator {
     @Test
     @DisplayName("Migrate old keys and messages")
     public void testStringMigration() {
-        final var oldResources = ComponentBundle.builder(key(), OUTPUT);
+        final var oldResources = ComponentBundle.builder(key(), BaseTest.OUTPUT);
         oldFiles.forEach((locale, file) -> oldResources.resource(file, locale));
         oldResources.build();
 
-        final var bundle = ComponentBundle.builder(key(), OUTPUT)
+        final var bundle = ComponentBundle.builder(key(), BaseTest.OUTPUT)
                 .resource("up_to_date.properties", Locale.US)
                 .resource("up_to_date_german.properties", Locale.GERMANY)
                 .migrator(this)
@@ -58,6 +58,6 @@ public class MigrationTest extends BaseTest implements ResourceMigrator {
 
     @BeforeAll
     public static void setUp() {
-        cleanup("up_to_date.properties", "up_to_date_german.properties");
+        BaseTest.cleanup("up_to_date.properties", "up_to_date_german.properties");
     }
 }

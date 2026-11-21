@@ -1,0 +1,42 @@
+// Imported from Gradle by `jpm import`. Edit freely; jpm does not read the Gradle build any more.
+{
+  "$schema": "https://github.com/java-package-manager/jpm/releases/latest/download/project.schema.json",
+  "name": "i18n",
+  "group": "net.thenextlvl",
+  "version": "1.3.0",
+  "license": "GPL-3.0-or-later",
+  "url": "https://github.com/TheNextLvl-net/i18n",
+  "java": "21",
+  "target": "21",
+  "dev": {
+    "net.kyori:adventure-text-logger-slf4j": {
+      "version": "4.27.0-SNAPSHOT",
+      "api": true
+    },
+    "net.kyori:adventure-text-minimessage": {
+      "version": "4.27.0-SNAPSHOT",
+      "api": true
+    },
+    "org.jspecify:jspecify": "1.0.1"
+  },
+  "test": {
+    "net.kyori:adventure-text-logger-slf4j": "4.27.0-SNAPSHOT",
+    "net.kyori:adventure-text-minimessage": "4.27.0-SNAPSHOT",
+    "org.jspecify:jspecify": "1.0.1",
+    "org.slf4j:slf4j-simple": "2.0.20"
+  },
+  "repositories": [
+    "https://repo.papermc.io/repository/maven-public/"
+  ],
+  "extensions": {
+    "publish": {
+      "repositories": {
+        "thenextlvl": {
+          "url": "https://repo.thenextlvl.net/releases",
+          "snapshots": "https://repo.thenextlvl.net/snapshots"
+        }
+      },
+      "javadoc": true
+    }
+  }
+}

@@ -31,7 +31,7 @@ public class FallbackTest extends BaseTest {
     public void fallback() {
         Assertions.assertEquals(
                 bundle.translate("success", Locale.US),
-                bundle.translate("success", SPANISH)
+                bundle.translate("success", BaseTest.SPANISH)
         );
     }
 

@@ -1,5 +1,4 @@
-.gradle
+.cache
 .idea
-.run
-build
+dist
 output
